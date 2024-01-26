@@ -1,0 +1,28 @@
+.button {
+    border: unset;
+    cursor: pointer;
+
+    &.primary {
+        background: #002352;
+        transition: background-color .2s linear;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 6px;
+
+        &:hover {
+            background: #174A8B;
+        }
+    }
+    
+    &.secondary {
+        background: #483EFF;
+        transition: background-color .2s linear;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 6px;
+
+        &:hover {
+            background: #938CFE;
+        }
+    }
+}

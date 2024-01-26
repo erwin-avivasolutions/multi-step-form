@@ -1,0 +1,37 @@
+.formstep {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  &.hidden {
+    display: none;
+  }
+
+  .title {
+    margin-bottom: 0.5rem;
+    color: #04295b;
+    font-size: 32px;
+  }
+
+  .content {
+    margin-bottom: 2rem;
+    color: #9699ab;
+  }
+
+  .button-holder {
+    margin-top: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
+  span.error {
+    margin-left: auto;
+    opacity: 0;
+    color: red;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+}

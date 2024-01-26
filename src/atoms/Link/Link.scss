@@ -1,0 +1,12 @@
+.link {
+    background: transparent;
+    border: unset;
+    color: #9699ab;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color .2s linear;
+
+    &:hover {
+        color: #174A8B;
+    }
+}
