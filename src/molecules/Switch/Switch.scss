@@ -75,4 +75,8 @@
     -ms-transform: translateX(12px);
     transform: translateX(12px);
   }
+
+  input:focus + &__slider {
+    outline: 2px solid #473dff;
+  }
 }

@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+import { ReactNode } from "react";
 import "./Radiobox.scss";
 
 type radioboxProps = {
@@ -21,10 +21,7 @@ type radioboxes = {
 export function Radiobox({ items, isYearly, option, onChange }: radioboxes) {
   const radios = items.map((item, index) => {
     return (
-      <label
-        className={`radiobox ${option === item.name ? "active" : ""}`}
-        key={index}
-      >
+      <div className="radio-holder" key={index}>
         <input
           type="radio"
           value={item.value}
@@ -32,14 +29,23 @@ export function Radiobox({ items, isYearly, option, onChange }: radioboxes) {
           onChange={() => onChange(item.name, item.value)}
           name="subscription"
           required
+          className="hidden_input"
+          id={`radiobox-${index}`}
         />
-        {item.icon}
-        <h4>{item.title}</h4>
-        <span className="radiobox__price">
-          {isYearly ? item.yearlyValue : item.monthlyValue}
-        </span>
-        {isYearly && <span className="radiobox__offer">{item.offerText}</span>}
-      </label>
+        <label
+          htmlFor={`radiobox-${index}`}
+          className={`radiobox ${option === item.name ? "active" : ""}`}
+        >
+          {item.icon}
+          <h4>{item.title}</h4>
+          <span className="radiobox__price">
+            {isYearly ? item.yearlyValue : item.monthlyValue}
+          </span>
+          {isYearly && (
+            <span className="radiobox__offer">{item.offerText}</span>
+          )}
+        </label>
+      </div>
     );
   });
   return <div className="radios">{radios}</div>;

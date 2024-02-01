@@ -25,21 +25,19 @@ export function StepFour({
   const formStepClass = clsx("formstep", !isActive && "hidden");
   let total = formData.subscription.value;
 
-  const extras = formData.extras.map((item) => {
-    total += item.value;
-    return (
-      <div className="tab__body--item">
-        <span className="name">{item.name}</span>
-        <span className="price">
-          +${isYearly ? `${item.value * 10}/yr` : `${item.value}/mo`}
-        </span>
-      </div>
-    );
+  const extras = formData.extras.map((item, index) => {
+    if (item !== undefined) {
+      total += item.value;
+      return (
+        <div className="tab__body--item" key={index}>
+          <span className="name">{item.name}</span>
+          <span className="price">
+            +${isYearly ? `${item.value * 10}/yr` : `${item.value}/mo`}
+          </span>
+        </div>
+      );
+    }
   });
-
-  function calculateCosts() {
-    let cost;
-  }
 
   if (isYearly) {
     total = total * 10;
@@ -76,14 +74,7 @@ export function StepFour({
         </h3>
       </div>
       <div className="button-holder">
-        <Button
-          type="submit"
-          style="secondary"
-          text="Confirm"
-          onClick={() => {
-            console.log("test");
-          }}
-        />
+        <Button type="submit" style="secondary" text="Confirm" />
         <Link text="Go Back" onClick={() => goToStep(3)} />
       </div>
     </div>

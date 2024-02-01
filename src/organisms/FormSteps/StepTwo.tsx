@@ -21,7 +21,7 @@ type formStep = {
 
 const items = [
   {
-    icon: <Icon type="IconArcade" />,
+    icon: <Icon type="IconArcade" size="small" />,
     title: "Arcade",
     name: "Arcade",
     value: 9,
@@ -30,7 +30,7 @@ const items = [
     offerText: "2 months free",
   },
   {
-    icon: <Icon type="IconAdvanced" />,
+    icon: <Icon type="IconAdvanced" size="small" />,
     title: "Advanced",
     name: "Advanced",
     value: 12,
@@ -39,7 +39,7 @@ const items = [
     offerText: "2 months free",
   },
   {
-    icon: <Icon type="IconPro" />,
+    icon: <Icon type="IconPro" size="small" />,
     title: "Pro",
     name: "Pro",
     value: 15,

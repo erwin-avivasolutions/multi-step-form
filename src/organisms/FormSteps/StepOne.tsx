@@ -14,16 +14,10 @@ export type formStepProps = {
   setFormData: Dispatch<SetStateAction<formDataObject>>;
 };
 
-type formObject = {
-  name: string;
-  email: string;
-  phonenumber: string;
-};
-
 type validFieldsObject = {
-  name: boolean;
-  email: boolean;
-  phonenumber: boolean;
+  name: number;
+  email: number;
+  phonenumber: number;
 };
 
 export function StepOne({
@@ -35,9 +29,9 @@ export function StepOne({
   setFormData,
 }: formStepProps) {
   const [validFields, setValidFields] = useState<validFieldsObject>({
-    name: true,
-    email: true,
-    phonenumber: true,
+    name: 2,
+    email: 2,
+    phonenumber: 2,
   });
 
   const formStepClass = clsx("formstep", !isActive && "hidden");
@@ -50,15 +44,22 @@ export function StepOne({
   }
 
   function handleOnBlur(name: string, validity: boolean) {
-    setValidFields({ ...validFields, [name]: validity });
+    setValidFields({ ...validFields, [name]: validity ? 1 : 0 });
   }
 
   function onSubmit() {
-    if (Object.values(formData.stepOne).every((v) => v !== "")) {
-      if (Object.values(validFields).every((v) => v === true)) {
-        goToStep(2);
+    if (Object.values(validFields).every((v) => v === 1)) {
+      goToStep(2);
+      return;
+    }
+
+    var newFields = validFields;
+    for (const [key, value] of Object.entries(validFields)) {
+      if (value === 2) {
+        newFields = { ...newFields, [key]: 0 };
       }
     }
+    setValidFields(newFields);
   }
 
   return (
@@ -70,7 +71,7 @@ export function StepOne({
         name="name"
         labelText="Name"
         placeholder="John Doe"
-        errorText="This field is required"
+        // errorText={validFields.name}
         value={formData.name}
         onChange={handleOnChange}
         onBlur={handleOnBlur}
@@ -81,7 +82,7 @@ export function StepOne({
         name="email"
         labelText="E-mail address"
         placeholder="email@address.com"
-        errorText="This field is required"
+        // errorText={validFields.email}
         value={formData.email}
         onChange={handleOnChange}
         onBlur={handleOnBlur}
@@ -92,7 +93,7 @@ export function StepOne({
         name="phonenumber"
         labelText="Phone number"
         placeholder="+31 6 12 345 678"
-        errorText="This field is required"
+        // errorText={validFields.phonenumber}
         value={formData.phonenumber}
         onChange={handleOnChange}
         onBlur={handleOnBlur}

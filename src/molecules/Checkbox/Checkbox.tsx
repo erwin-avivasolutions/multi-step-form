@@ -22,10 +22,7 @@ export function Checkbox({
   isActive,
 }: checkboxProps) {
   return (
-    <label
-      htmlFor={`checkbox-${index}`}
-      className={`checkbox ${isActive ? "active" : ""}`}
-    >
+    <>
       <input
         type="checkbox"
         id={`checkbox-${index}`}
@@ -33,15 +30,21 @@ export function Checkbox({
         value={value}
         checked={isActive}
         onChange={() => handleOnChange(index, title, value)}
+        className="hidden_checkbox"
       />
-      <div className={`checkbox__box ${isActive ? "checked" : ""}`}>
-        <Icon type="IconCheckmark" />
-      </div>
-      <div className="checkbox__content">
-        <h4>{title}</h4>
-        <span>{text}</span>
-      </div>
-      <div className="checkbox__price">{price}</div>
-    </label>
+      <label
+        htmlFor={`checkbox-${index}`}
+        className={`checkbox ${isActive ? "active" : ""}`}
+      >
+        <div className={`checkbox__box ${isActive ? "checked" : ""}`}>
+          <Icon type="IconCheckmark" size="small" />
+        </div>
+        <div className="checkbox__content">
+          <h4>{title}</h4>
+          <span>{text}</span>
+        </div>
+        <div className="checkbox__price">{price}</div>
+      </label>
+    </>
   );
 }

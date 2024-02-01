@@ -4,6 +4,7 @@ import { ReactComponent as IconArcade } from "../../assets/images/icon-arcade.sv
 import { ReactComponent as IconCheckmark } from "../../assets/images/icon-checkmark.svg";
 import { ReactComponent as IconPro } from "../../assets/images/icon-pro.svg";
 import { ReactComponent as IconThankyou } from "../../assets/images/icon-thank-you.svg";
+import { clsx } from "clsx";
 
 type IconProps = {
   type:
@@ -12,6 +13,7 @@ type IconProps = {
     | "IconCheckmark"
     | "IconPro"
     | "IconThankyou";
+  size: "small" | "large";
 };
 
 const Icons = {
@@ -22,7 +24,9 @@ const Icons = {
   IconThankyou,
 };
 
-export function Icon({ type }: IconProps) {
+export function Icon({ type, size }: IconProps) {
+  const iconClass = clsx("icon", size);
   const IconComponent = Icons[type];
-  return <IconComponent className="icon" />;
+
+  return <IconComponent className={iconClass} />;
 }

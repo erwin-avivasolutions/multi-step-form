@@ -5,6 +5,7 @@ import { StepTwo } from "./organisms/FormSteps/StepTwo";
 import { StepThree } from "./organisms/FormSteps/StepThree";
 import { StepFour } from "./organisms/FormSteps/StepFour";
 import "./App.scss";
+import { ThankYouStep } from "./organisms/ThankYouStep/ThankYouStep";
 
 const steps = [
   {
@@ -64,10 +65,26 @@ function App() {
   }
 
   //onSubmit maken
-  function onSubmit(e: React.FormEvent<SubmitEvent>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    goToStep(4);
+    fetch("http://localhost:443/form_submissions", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((result) => {
+        console.log(result);
+        // goToStep(5);
+      })
+      .catch((err) => {
+        console.error(err);
+        // setMessage(err.toString());
+        // setStatus('error');
+      });
   }
 
   return (
@@ -76,43 +93,46 @@ function App() {
         <div className="multi-form__steps">
           <Steps steps={steps} activeStep={activeStep} />
         </div>
-        <form className="form-container">
-          <StepOne
-            isActive={activeStep === 1}
-            title="Personal info"
-            text="Please provide your name, email address, and phone number."
-            goToStep={goToStep}
-            formData={formData}
-            setFormData={setFormData}
-          />
-          <StepTwo
-            isActive={activeStep === 2}
-            isYearly={isYearly}
-            setIsYearly={setIsYearly}
-            title="Select your plan"
-            text="You have the option of monthly or yearly billing"
-            goToStep={goToStep}
-            formData={formData}
-            setFormData={setFormData}
-          />
-          <StepThree
-            isActive={activeStep === 3}
-            isYearly={isYearly}
-            title="Pick add-ons"
-            text="Add-ons help enhance you gaming experience"
-            goToStep={goToStep}
-            formData={formData}
-            setFormData={setFormData}
-          />
-          <StepFour
-            isActive={activeStep === 4}
-            isYearly={isYearly}
-            title="Finishing up"
-            text="Double-check everything looks OK before confirming."
-            goToStep={goToStep}
-            formData={formData}
-          />
-        </form>
+        {activeStep !== 5 && (
+          <form className="form-container" onSubmit={(e) => onSubmit(e)}>
+            <StepOne
+              isActive={activeStep === 1}
+              title="Personal info"
+              text="Please provide your name, email address, and phone number."
+              goToStep={goToStep}
+              formData={formData}
+              setFormData={setFormData}
+            />
+            <StepTwo
+              isActive={activeStep === 2}
+              isYearly={isYearly}
+              setIsYearly={setIsYearly}
+              title="Select your plan"
+              text="You have the option of monthly or yearly billing"
+              goToStep={goToStep}
+              formData={formData}
+              setFormData={setFormData}
+            />
+            <StepThree
+              isActive={activeStep === 3}
+              isYearly={isYearly}
+              title="Pick add-ons"
+              text="Add-ons help enhance your gaming experience"
+              goToStep={goToStep}
+              formData={formData}
+              setFormData={setFormData}
+            />
+            <StepFour
+              isActive={activeStep === 4}
+              isYearly={isYearly}
+              title="Finishing up"
+              text="Double-check everything looks OK before confirming."
+              goToStep={goToStep}
+              formData={formData}
+            />
+          </form>
+        )}
+        {activeStep === 5 && <ThankYouStep title="Thank you!" />}
       </div>
     </div>
   );

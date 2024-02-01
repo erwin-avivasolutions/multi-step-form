@@ -10,8 +10,7 @@ type inputProps = {
   placeholder: string;
   onChange: (name: string, value: string) => void;
   onBlur: (name: string, validity: boolean) => void;
-  isValid: boolean;
-  errorText: string;
+  isValid: number;
 };
 
 export function Input({
@@ -20,13 +19,14 @@ export function Input({
   name,
   labelText,
   value,
-  errorText,
   onChange,
   onBlur,
   isValid,
 }: inputProps) {
-  const errorClass = clsx("label__content--error", !isValid && "show");
-  const inputClass = clsx("label__input", !isValid && "error");
+  const [errorText, setErrorText] = useState<string>("");
+
+  const errorClass = clsx("label__content--error", isValid === 0 && "show");
+  const inputClass = clsx("label__input", isValid === 0 && "error");
 
   return (
     <label className="label">
@@ -40,12 +40,13 @@ export function Input({
         name={name}
         placeholder={placeholder}
         value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange={(e) => {
           onChange(e.target.name, e.target.value);
         }}
-        onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
-          let validity = e.target.checkValidity();
-          onBlur(e.target.name, validity);
+        onBlur={(e) => {
+          let message = e.target.validationMessage;
+          setErrorText(message);
+          onBlur(e.target.name, e.target.checkValidity());
         }}
         required
         pattern={type === "tel" ? "[0-9]{10}" : undefined}

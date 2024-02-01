@@ -4,12 +4,32 @@
   gap: 16px;
   margin-bottom: 32px;
 
-  .radiobox {
+  .hidden_input {
+    height: 0;
+    width: 0;
+    // visibility: hidden;
+
+    &:focus + .radiobox {
+      outline: 1px solid #473dff;
+    }
+  }
+
+  .radio-holder {
     flex: 33.3333%;
+  }
+
+  .radiobox {
     padding: 16px;
     border: 1px solid #d6d9e6;
     border-radius: 6px;
     transition: border-color 0.2s linear, background-color 0.2s linear;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #544f92;
+    }
 
     &.active {
       background: #f8f9fe;
