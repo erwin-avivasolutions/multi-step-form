@@ -4,15 +4,15 @@ const server = jsonServer.create();
 const middlewares = jsonServer.defaults();
 
 function writeToFile(body) {
-  const data = require("./db.json");
-  console.log(data.form_submisisons);
+  var data = require("./db.json");
 
   data.form_submisisons.push(body);
 
   fs.writeFile("db.json", JSON.stringify(data), (err) => {
-    if (err) throw err;
+    if (err) return 500;
 
     console.log("Succes");
+    return 200;
   });
 }
 
@@ -22,7 +22,9 @@ server.use(jsonServer.bodyParser);
 server.use((req, res, next) => {
   switch (req.path) {
     case "/form_submissions":
-      writeToFile(req.body);
+      const status = writeToFile(req.body);
+      console.log(status);
+      res.status(200).json("succes");
       return;
     default:
       next();

@@ -77,13 +77,13 @@ function App() {
       body: JSON.stringify(formData),
     })
       .then((result) => {
+        if (result.status === 200) {
+          goToStep(5);
+        }
         console.log(result);
-        // goToStep(5);
       })
       .catch((err) => {
         console.error(err);
-        // setMessage(err.toString());
-        // setStatus('error');
       });
   }
 
