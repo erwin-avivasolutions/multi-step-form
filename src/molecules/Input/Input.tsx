@@ -28,6 +28,33 @@ export function Input({
   const errorClass = clsx("label__content--error", isValid === 0 && "show");
   const inputClass = clsx("label__input", isValid === 0 && "error");
 
+  function defineError(validity: ValidityState) {
+    if (!validity.valid) {
+      var errorType;
+      for (const key in validity) {
+        const typedKey = key as keyof typeof validity;
+        if (validity[typedKey]) {
+          errorType = key;
+        }
+      }
+      console.log(errorType);
+      switch (errorType) {
+        case "valueMissing":
+          setErrorText("Field cannot be empty");
+          return;
+        case "typeMismatch":
+          setErrorText("Field does not match requirements");
+          return;
+        case "patternMismatch":
+          setErrorText("Field can only accept numerical values");
+          return;
+        default:
+          setErrorText("Field is invalid");
+          return;
+      }
+    }
+  }
+
   return (
     <label className="label">
       <div className="label__content">
@@ -44,8 +71,10 @@ export function Input({
           onChange(e.target.name, e.target.value);
         }}
         onBlur={(e) => {
-          let message = e.target.validationMessage;
-          setErrorText(message);
+          const validity = e.target.validity;
+          defineError(validity);
+          // let message = e.target.validationMessage;
+          // setErrorText(message);
           onBlur(e.target.name, e.target.checkValidity());
         }}
         required
